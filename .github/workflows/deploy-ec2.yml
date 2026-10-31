@@ -175,7 +175,7 @@ jobs:
             echo "Docker not found. Installing Docker..."
             if command -v apt-get >/dev/null 2>&1; then
               sudo apt-get update
-              sudo apt-get install -y docker.io docker-compose-plugin
+              sudo apt-get install -y docker.io
             else
               echo "ERROR: Unsupported package manager; install Docker manually."
               exit 1
@@ -183,6 +183,23 @@ jobs:
           fi
 
           sudo systemctl enable --now docker || true
+
+          if ! sudo docker compose version >/dev/null 2>&1; then
+            echo "Docker Compose v2 not found. Installing..."
+            if command -v apt-get >/dev/null 2>&1; then
+              sudo apt-get update
+              sudo apt-get install -y docker-compose-v2 || true
+            fi
+          fi
+
+          if ! sudo docker compose version >/dev/null 2>&1 && ! command -v docker-compose >/dev/null 2>&1; then
+            echo "Installing Docker Compose v2 CLI plugin binary..."
+            ARCH="$(uname -m)"
+            sudo mkdir -p /usr/local/lib/docker/cli-plugins
+            sudo curl -fsSL "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-${ARCH}" \
+              -o /usr/local/lib/docker/cli-plugins/docker-compose
+            sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+          fi
 
           if sudo docker compose version >/dev/null 2>&1; then
             DOCKER_COMPOSE_CMD="sudo docker compose"
