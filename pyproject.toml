@@ -1,0 +1,25 @@
+[project]
+name = "customer-support-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "fastapi",
+  "uvicorn[standard]",
+  "pydantic-settings",
+  "python-dotenv",
+  "langchain>=1.0,<2.0",
+  "langchain-core",
+  "langchain-groq",
+  "langchain-text-splitters",
+  "mem0ai",
+  "chromadb",
+  "streamlit",
+  "requests",
+  "email-validator",
+  "google-genai",
+  # Optional local embedding stack (disabled to keep EC2 image size low):
+  # "sentence-transformers",
+  # "torch",
+]
