@@ -48,7 +48,7 @@ jobs:
       - name: Configure SSH key
         run: |
           mkdir -p ~/.ssh
-          printf "%s" "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          printf "%s\n" "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
       - name: Package release archive
@@ -59,6 +59,8 @@ jobs:
             --exclude='__pycache__' \
             --exclude='.pytest_cache' \
             --exclude='artifacts' \
+            --exclude='./data' \
+            --exclude='data' \
             -czf /tmp/release.tar.gz .
 
       - name: Upload archive to EC2
@@ -69,11 +71,39 @@ jobs:
         run: |
           set -euo pipefail
           PORT="${EC2_PORT:-22}"
-          HOST="${EC2_HOST_STATIC:-$EC2_HOST}"
-          echo "Uploading archive to ${EC2_USER}@${HOST}:${PORT}"
-          if ! timeout 10 bash -c "cat < /dev/null > /dev/tcp/${HOST}/${PORT}"; then
-            echo "ERROR: Cannot reach ${HOST}:${PORT} from GitHub runner."
-            echo "Check EC2 Security Group/NACL/route table and SSH service."
+
+          # Sanitize host and user in case a full ssh command or user@host was supplied
+          RAW_HOST="${EC2_HOST_STATIC:-$EC2_HOST}"
+          TARGET=$(echo "$RAW_HOST" | awk '{print $NF}')
+          if [[ "$TARGET" == *"@"* ]]; then
+            DETECTED_USER="${TARGET%%@*}"
+            CLEAN_HOST="${TARGET##*@}"
+          else
+            DETECTED_USER=""
+            CLEAN_HOST="$TARGET"
+          fi
+          CLEAN_HOST=$(echo "$CLEAN_HOST" | sed -E 's/[/:]+$//')
+          CLEAN_USER="${EC2_USER:-${DETECTED_USER:-ubuntu}}"
+
+          echo "Target server: ${CLEAN_USER}@${CLEAN_HOST}:${PORT}"
+
+          if [ -z "$CLEAN_HOST" ]; then
+            echo "ERROR: EC2_HOST secret is empty! Please set it in GitHub repository secrets."
+            exit 1
+          fi
+
+          echo "Testing SSH connectivity to ${CLEAN_USER}@${CLEAN_HOST}:${PORT}..."
+          if ! ssh -p "$PORT" \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=15 \
+            -o BatchMode=yes \
+            "${CLEAN_USER}@${CLEAN_HOST}" "true"; then
+            echo "ERROR: Cannot establish SSH connection to ${CLEAN_USER}@${CLEAN_HOST}:${PORT}."
+            echo "Please verify:"
+            echo "  1) EC2 Security Group has inbound rule for SSH (Port 22, Source 0.0.0.0/0 or GitHub runner IP)"
+            echo "  2) EC2_SSH_KEY secret contains the private key (.pem) content"
+            echo "  3) EC2_USER secret matches the AMI user ('ubuntu' for Ubuntu, 'ec2-user' for Amazon Linux)"
+            echo "  4) EC2_HOST secret contains the public IP or DNS name"
             exit 1
           fi
 
@@ -81,7 +111,7 @@ jobs:
             if scp -P "$PORT" \
               -o StrictHostKeyChecking=no \
               -o ConnectTimeout=30 \
-              /tmp/release.tar.gz "${EC2_USER}@${HOST}:/tmp/customer_support_agent_release.tar.gz"; then
+              /tmp/release.tar.gz "${CLEAN_USER}@${CLEAN_HOST}:/tmp/customer_support_agent_release.tar.gz"; then
               break
             fi
             if [ "$attempt" -eq 3 ]; then
@@ -101,21 +131,27 @@ jobs:
         run: |
           set -euo pipefail
           PORT="${EC2_PORT:-22}"
-          HOST="${EC2_HOST_STATIC:-$EC2_HOST}"
+
+          RAW_HOST="${EC2_HOST_STATIC:-$EC2_HOST}"
+          TARGET=$(echo "$RAW_HOST" | awk '{print $NF}')
+          if [[ "$TARGET" == *"@"* ]]; then
+            DETECTED_USER="${TARGET%%@*}"
+            CLEAN_HOST="${TARGET##*@}"
+          else
+            DETECTED_USER=""
+            CLEAN_HOST="$TARGET"
+          fi
+          CLEAN_HOST=$(echo "$CLEAN_HOST" | sed -E 's/[/:]+$//')
+          CLEAN_USER="${EC2_USER:-${DETECTED_USER:-ubuntu}}"
           APP_DIR="${EC2_APP_DIR:-/opt/customer_support_agent}"
 
-          echo "Deploying to ${EC2_USER}@${HOST}:${PORT}"
-          if ! timeout 10 bash -c "cat < /dev/null > /dev/tcp/${HOST}/${PORT}"; then
-            echo "ERROR: Cannot reach ${HOST}:${PORT} from GitHub runner."
-            echo "Check EC2 Security Group/NACL/route table and SSH service."
-            exit 1
-          fi
+          echo "Deploying to ${CLEAN_USER}@${CLEAN_HOST}:${PORT} in ${APP_DIR}..."
 
           for deploy_attempt in 1 2 3; do
             if ssh -p "$PORT" \
               -o StrictHostKeyChecking=no \
               -o ConnectTimeout=30 \
-              "${EC2_USER}@${HOST}" \
+              "${CLEAN_USER}@${CLEAN_HOST}" \
               "APP_DIR='${APP_DIR}' bash -s" <<'EOF_REMOTE'; then
           set -euo pipefail
 

@@ -18,6 +18,7 @@ RUN pip install --upgrade pip uv
 
 COPY pyproject.toml uv.lock /app/
 RUN uv sync --frozen --no-dev --no-cache
+ENV UV_NO_SYNC=1
 
 COPY . /app
 
