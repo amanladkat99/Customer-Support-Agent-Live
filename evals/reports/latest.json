@@ -1,0 +1,479 @@
+{
+  "generated_at": "2026-11-10T13:04:51.353510+00:00",
+  "status": "failed",
+  "summary": {
+    "case_count": 14,
+    "evaluated_case_count": 14,
+    "skipped_case_count": 0,
+    "ragas_averages": {
+      "faithfulness": 0.4753,
+      "answer_relevancy": 0.752,
+      "context_precision": 1.0
+    },
+    "deepeval_pass_rates": {
+      "expected_tools": 1.0,
+      "no_pii_leak": 1.0,
+      "no_forbidden_promises": 1.0,
+      "length_bound": 1.0
+    },
+    "thresholds": {
+      "faithfulness": 0.64,
+      "answer_relevancy": 0.7,
+      "context_precision": 0.6
+    },
+    "threshold_passed": false
+  },
+  "cases": [
+    {
+      "id": "atm_pin_safety_guidance",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 0.4444,
+        "answer_relevancy": 0.8276,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": false
+    },
+    {
+      "id": "plan_atm_issue_priority",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 0.4545,
+        "answer_relevancy": 0.6336,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": false
+    },
+    {
+      "id": "plan_min_balance_priority",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 0.1667,
+        "answer_relevancy": 0.6502,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": false
+    },
+    {
+      "id": "low_risk_kyc_frequency",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 0.25,
+        "answer_relevancy": 0.921,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": false
+    },
+    {
+      "id": "email_update_timing",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 0.6667,
+        "answer_relevancy": 0.698,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": false
+    },
+    {
+      "id": "urban_min_balance",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9688,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "plan_kyc_update_priority",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.4161,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": false
+    },
+    {
+      "id": "accepted_address_proof",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9427,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "atm_cash_debited_reversal",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 0.5556,
+        "answer_relevancy": 0.8219,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": false
+    },
+    {
+      "id": "atm_standard_limit",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 0.2,
+        "answer_relevancy": 0.8759,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": false
+    },
+    {
+      "id": "dmat_not_available",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 0.25,
+        "answer_relevancy": 0.7664,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": false
+    },
+    {
+      "id": "closure_within_14_days",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 0.3333,
+        "answer_relevancy": 0.7133,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": false
+    },
+    {
+      "id": "atm_wrong_pin_manual_reset",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 0.3333,
+        "answer_relevancy": 0.5409,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": false
+    },
+    {
+      "id": "non_maintenance_fee",
+      "skipped": false,
+      "ragas": {
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.7518,
+        "context_precision": 1.0
+      },
+      "deepeval": {
+        "expected_tools": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_pii_leak": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "no_forbidden_promises": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        },
+        "length_bound": {
+          "passed": true,
+          "score": null,
+          "reason": null
+        }
+      },
+      "passed": false
+    }
+  ],
+  "notes": [
+    "Cases below per-case thresholds: atm_pin_safety_guidance, plan_atm_issue_priority, plan_min_balance_priority, low_risk_kyc_frequency, email_update_timing, plan_kyc_update_priority, atm_cash_debited_reversal, atm_standard_limit, dmat_not_available, closure_within_14_days, atm_wrong_pin_manual_reset, non_maintenance_fee"
+  ]
+}

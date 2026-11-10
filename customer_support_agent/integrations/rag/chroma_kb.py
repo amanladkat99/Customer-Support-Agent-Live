@@ -29,15 +29,18 @@ class KnowledgeBaseService:
 
     def _build_embedding_function(self) -> Any:
         if self._settings.google_api_key:
-            # Chroma's GoogleGenaiEmbeddingFunction reads GOOGLE_API_KEY from env.
+            # Chroma's GoogleGenaiEmbeddingFunction reads the key from an env var
+            # (default: GEMINI_API_KEY). Point it explicitly at GOOGLE_API_KEY.
             os.environ.setdefault("GOOGLE_API_KEY", self._settings.google_api_key)
             try:
                 return embedding_functions.GoogleGenaiEmbeddingFunction(
                     model_name=self._settings.effective_google_embedding_model,
+                    api_key_env_var="GOOGLE_API_KEY",
                 )
             except Exception as exc:
                 raise RuntimeError(
-                    "Gemini embedding initialization failed. Install `google-genai` and verify GOOGLE_API_KEY."
+                    "Gemini embedding initialization failed. Install `google-genai` and verify "
+                    f"GOOGLE_API_KEY. Cause: {exc}"
                 ) from exc
 
         return embedding_functions.DefaultEmbeddingFunction()

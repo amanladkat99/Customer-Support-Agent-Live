@@ -42,6 +42,7 @@ class CustomerMemoryStore:
                 "provider": "chroma",
                 "config": {
                     "path": str(settings.chroma_mem0_path),
+                    "collection_name": self._collection_name_for(settings),
                 },
             },
         }
@@ -78,6 +79,19 @@ class CustomerMemoryStore:
             )
 
         self._memory = Memory.from_config(config)
+
+    @staticmethod
+    def _collection_name_for(settings: Settings) -> str:
+        # Each embedding provider produces vectors of a different dimension
+        # (OpenAI 1536, Gemini 768, MiniLM 384). Chroma collections are fixed
+        # to one dimension, so use a provider-specific collection to avoid
+        # "Collection expecting embedding with dimension X, got Y" errors
+        # when the configured provider changes.
+        if settings.google_api_key:
+            return "mem0_gemini"
+        if settings.openai_api_key:
+            return "mem0"  # original collection name, keeps existing OpenAI memories
+        return "mem0_local"
 
     def search(self, query: str, user_id: str, limit: int = 5) -> list[dict[str, Any]]:
         # mem0 >= 2.0: user_id is passed via filters={}; top_k replaces limit.

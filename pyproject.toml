@@ -22,10 +22,39 @@ dependencies = [
   # Optional local embedding stack (disabled to keep EC2 image size low):
   # "sentence-transformers",
   # "torch",
+  "guardrails-ai>=0.11.0",
+  "spacy>=3.7",
 ]
+
+[tool.uv]
+package = false
+
+# Optional torch CPU index (enable only if uncommenting "torch" above):
+# [tool.uv.sources]
+# torch = { index = "pytorch-cpu" }
+#
+# [[tool.uv.index]]
+# name = "pytorch-cpu"
+# url = "https://download.pytorch.org/whl/cpu"
+# explicit = true
 
 [dependency-groups]
 dev = [
-  "pytest>=8.0.0",
+  "playwright>=1.58.0",
+  "pytest",
+  "ragas>=0.2",
+  "deepeval>=1.0",
+  "rapidfuzz>=3.10",
   "httpx>=0.27.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+  "full_eval: marks the full RAG + agent evaluation suite",
+]
+filterwarnings = [
+  "ignore:Importing NonLLMContextPrecisionWithReference from 'ragas.metrics' is deprecated:DeprecationWarning",
+  "ignore:.*LangchainEmbeddingsWrapper is deprecated.*:DeprecationWarning",
+  "ignore:.*LangchainLLMWrapper is deprecated.*:DeprecationWarning",
 ]
